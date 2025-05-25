@@ -9,14 +9,49 @@ This project provides a modular Flask application structure designed for ArtNet 
 ├── app/                    # Main application package
 │   ├── __init__.py         # Application factory (create_app)
 │   ├── modules/            # Directory for application modules (blueprints)
-│   │   └── core/           # Example 'core' module for ArtNet
-│   │       ├── __init__.py # Makes 'core' a Python package
-│   │       └── routes.py   # Defines routes for the 'core' module
+│   │   ├── core/           # Core module for ArtNet API
+│   │   │   ├── __init__.py # Makes 'core' a Python package
+│   │   │   └── routes.py   # Defines API routes for the 'core' module
+│   │   ├── patch/          # Patch module
+│   │   │   ├── __init__.py
+│   │   │   └── routes.py
+│   │   ├── playback/       # Playback module
+│   │   │   ├── __init__.py
+│   │   │   └── routes.py
+│   │   └── programming/    # Programming module
+│   │       ├── __init__.py
+│   │       └── routes.py
 │   ├── static/             # Static files (CSS, JavaScript, images)
 │   └── templates/          # HTML templates
+│       ├── patch/          # Templates for the patch module
+│       │   └── patch.html
+│       ├── playback/       # Templates for the playback module
+│       │   └── playback.html
+│       └── programming/    # Templates for the programming module
+│           └── programming.html
 ├── run.py                  # Script to run the Flask development server
 └── README.md               # This file
 ```
+
+## Core Module API Endpoints
+
+The `core` module provides the following ArtNet related API endpoints under the `/artnet` prefix:
+
+-   **`GET /artnet/api/universes`**: Lists all configured ArtNet universes.
+-   **`POST /artnet/api/universes`**: Adds a new ArtNet universe. (Expects JSON payload)
+-   **`GET /artnet/api/nodes`**: Lists all discovered ArtNet nodes.
+-   **`POST /artnet/api/nodes`**: Configures a new ArtNet node. (Expects JSON payload)
+
+## Feature Modules
+
+This application includes the following feature modules, each with a placeholder HTML page:
+
+-   **Patch Module**: Accessible at `/patch/`. Contains a basic `patch.html`.
+    -   Templates: `app/templates/patch/`
+-   **Playback Module**: Accessible at `/playback/`. Contains a basic `playback.html`.
+    -   Templates: `app/templates/playback/`
+-   **Programming Module**: Accessible at `/programming/`. Contains a basic `programming.html`.
+    -   Templates: `app/templates/programming/`
 
 ## Running the Application
 
@@ -30,7 +65,10 @@ This project provides a modular Flask application structure designed for ArtNet 
     ```bash
     python run.py
     ```
-    The application will start in debug mode, typically on `http://127.0.0.1:5000/`. The ArtNet routes will be available under the `/artnet` prefix (e.g., `http://127.0.0.1:5000/artnet/universes`).
+
+    The application will start in debug mode, typically on `http://127.0.0.1:5000/`.
+    - ArtNet API routes are available under `/artnet/api/...`.
+    - Module pages are available (e.g., `http://127.0.0.1:5000/patch/`).
 
 ## Adding New Modules (Blueprints)
 
