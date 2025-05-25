@@ -205,5 +205,117 @@ function clearSelection() {
 }
 
 // Node loading
-document.addEventListener('DOMContentLoaded', () => updateNodes(true));
+// Node loading
+document.addEventListener('DOMContentLoaded', () => {
+    updateNodes(true);
+    loadFixtures(); // Call loadFixtures here
+});
 document.getElementById('refresh-nodes')?.addEventListener('click', () => updateNodes(true));
+
+async function loadFixtures() {
+    const fixturesPanel = document.getElementById('fixtures_panel');
+    if (!fixturesPanel) {
+        console.error('Fixtures panel element not found.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/fixtures');
+        if (!response.ok) {
+            console.error('Failed to fetch fixtures:', response.status, response.statusText);
+            fixturesPanel.innerHTML = '<p class="text-red-400">Error loading fixtures.</p>';
+            return;
+        }
+
+        const fixtures = await response.json();
+        
+        // Clear existing content
+        fixturesPanel.innerHTML = ''; 
+
+        if (fixtures.length === 0) {
+            // You can add a placeholder message if no fixtures are available
+            // fixturesPanel.innerHTML = '<p class="text-gray-400">No fixtures uploaded yet.</p>';
+            // For now, leaving it blank if empty as per original panel behavior
+        } else {
+            fixtures.forEach(fixture => {
+                const fixtureName = fixture.fixture_name || 'Unnamed Fixture';
+                const channelCount = fixture.channel_count !== undefined ? fixture.channel_count : 'N/A';
+                const iconUrl = '/static/assets/icon_mh.png'; // Direct path for JS
+
+                const fixtureHTML = `
+                    <div class="list-item-container selectable flex flex-col items-center text-center">
+                        <img alt="Light fixture icon" class="list-item-icon mb-1" src="${iconUrl}" width="160" height="200">
+                        <p class="font-medium text-sm">${fixtureName}</p>
+                        <p class="text-xs text-gray-400">${channelCount} Channels</p>
+                    </div>
+                `;
+                fixturesPanel.insertAdjacentHTML('beforeend', fixtureHTML);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching or processing fixtures:', error);
+        fixturesPanel.innerHTML = '<p class="text-red-400">Error loading fixtures.</p>';
+    }
+}
+
+// --- Fixture Upload Logic ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    const fixtureAddButton = document.getElementById('fixture_add');
+    const fixtureFileInput = document.getElementById('fixture_file_input');
+
+    if (fixtureAddButton) {
+        fixtureAddButton.addEventListener('click', () => {
+            if (fixtureFileInput) {
+                fixtureFileInput.click();
+            }
+        });
+    }
+
+    if (fixtureFileInput) {
+        fixtureFileInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                return; // No file selected
+            }
+
+            if (file.type !== 'application/json') {
+                alert('Please select a valid JSON file.');
+                // Reset file input
+                fixtureFileInput.value = '';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file); // 'file' is the name the server will expect
+
+            try {
+                const response = await fetch('/api/fixtures/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message || 'Fixture uploaded successfully!');
+                    // Later, we will call a function here to refresh the fixtures list,
+                    // for example: loadFixtures();
+                    if (typeof loadFixtures === 'function') {
+                        loadFixtures();
+                    } else {
+                        console.warn('loadFixtures function not yet defined. Fixture list may not auto-refresh.');
+                    }
+                } else {
+                    alert(result.error || 'Error uploading fixture.');
+                }
+            } catch (error) {
+                console.error('Error during fixture upload:', error);
+                alert('An unexpected error occurred during upload.');
+            } finally {
+                // Reset file input so the same file can be selected again if needed
+                fixtureFileInput.value = '';
+            }
+        });
+    }
+});

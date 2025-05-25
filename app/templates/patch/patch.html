@@ -321,6 +321,7 @@ remove
 <section class="col-span-4 card">
 <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-medium">Fixures</h2>
+        <button class="p-1 rounded-full hover:bg-gray-700" id="fixture_add"> <span class="material-symbols-outlined">add</span> </button>
         <div class="flex items-center space-x-2">
           <button class="p-1 rounded-full hover:bg-gray-700">
             <span class="material-symbols-outlined">
@@ -329,6 +330,7 @@ more_horiz
           </button>
         </div>
       </div>
+      <input type="file" id="fixture_file_input" style="display: none;" accept=".json">
 <div class="grid grid-cols-3 gap-4" id="fixtures_panel">
 <div class="list-item-container selectable flex flex-col items-center text-center">
 <img alt="Light fixture icon" class="list-item-icon mb-1" src="{{ url_for('static', filename='assets/icon_mh.png') }}" width="160" height="200">
