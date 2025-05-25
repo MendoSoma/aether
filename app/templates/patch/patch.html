@@ -14,12 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
-          * {
-          cursor: none;
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
+         
         body {
             font-family: 'Inter', sans-serif;
             background-color: #1F1F1F;color: #E0E0E0;}
@@ -242,8 +237,22 @@
 </style>
     </style>
 <body class="p-6 chakra-petch-regular">
-<header class="mb-6">
-<img src="logo2.png" alt="Aether Logo" width="300" height="60">
+<header class="flex justify-between items-center p-6">
+  <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Aether Logo" width="300" height="60">
+  <div class="card flex space-x-2" id="file-control">
+    <button class="p-1 rounded-full hover:bg-gray-700">
+      <span class="material-symbols-outlined">folder_open</span>
+    </button>
+    <button class="p-1 rounded-full hover:bg-gray-700">
+      <span class="material-symbols-outlined">save</span>
+    </button>
+    <button class="p-1 rounded-full hover:bg-gray-700">
+      <span class="material-symbols-outlined">lock</span>
+    </button>
+    <button class="p-1 rounded-full hover:bg-gray-700">
+      <span class="material-symbols-outlined">wifi</span>
+    </button>
+  </div>
 </header>
 <main class="grid grid-cols-12 gap-6">
 <section class="col-span-2 card">
@@ -251,36 +260,12 @@
         <h2 class="text-lg font-medium">Nodes</h2>
         <div class="flex items-center space-x-2">
           <button class="p-1 rounded-full hover:bg-gray-700">
-            <span class="material-symbols-outlined">sync</span>
-          </button>
-    <button class="p-1 rounded-full hover:bg-gray-700">
-            <span class="material-symbols-outlined">
-save
-</span>
+            <span class="material-symbols-outlined" id="refresh-nodes">sync</span>
           </button>
         </div>
       </div>
       <ul class="space-y-3" id="nodes_ul">
-        <li class="list-item-container selectable flex justify-between items-center" data-node-id="0">
-          <div>
-            <p class="font-medium">ICERAY NODE 1</p>
-            <p class="text-sm text-gray-400">
-              <span data-type="node-ip">192.168.1.201 | </span>
-              <span data-type="node-universe-count">2 Universes</span>
-            </p>
-          </div>
-          <div class="status-indicator online" data-type="cnx_node"></div>
-        </li>
-        <li class="list-item-container selectable flex justify-between items-center" data-node-id="1">
-          <div>
-            <p class="font-medium">ICERAY NODE 2</p>
-            <p class="text-sm text-gray-400">
-              <span data-type="node-ip">192.168.1.202 | </span>
-              <span data-type="node-universe-count">1 Universe</span>
-            </p>
-          </div>
-          <div class="status-indicator online" data-type="cnx_node"></div>
-        </li>
+
       </ul>
     </section>
     <section class="col-span-2 card">
@@ -301,7 +286,7 @@ remove
       </div>
       <ul class="space-y-3" id="universe_ul">
         <li class="list-item-container selectable flex justify-between items-center" data-universe-id="1">
-          <div class="status-indicator online" data-type="cnx_universe"></div>
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
           <div>
             <p class="font-medium">Universe 1</p>
             <p class="text-sm text-gray-400">
@@ -311,7 +296,7 @@ remove
           </div>
         </li>
         <li class="list-item-container selectable flex justify-between items-center" data-universe-id="2">
-          <div class="status-indicator online" data-type="cnx_universe"></div>
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
           <div>
             <p class="font-medium">Universe 2</p>
             <p class="text-sm text-gray-400">
@@ -321,7 +306,7 @@ remove
           </div>
         </li>
         <li class="list-item-container selectable flex justify-between items-center" data-universe-id="3">
-          <div class="status-indicator online" data-type="cnx_universe"></div>
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
           <div>
             <p class="font-medium">Universe 3</p>
             <p class="text-sm text-gray-400">
@@ -346,7 +331,7 @@ more_horiz
       </div>
 <div class="grid grid-cols-3 gap-4">
 <div class="list-item-container selectable flex flex-col items-center text-center">
-<img alt="Light fixture icon" class="list-item-icon mb-1" src="icon_mh.png" width="160" height="200">
+<img alt="Light fixture icon" class="list-item-icon mb-1" src="{{ url_for('static', filename='assets/icon_mh.png') }}" width="160" height="200">
 <p class="font-medium text-sm">UKing 7x40 RGBW</p>
 <p class="text-xs text-gray-400">51 Channels</p>
 </div>
@@ -517,192 +502,42 @@ close
             });
         });
     </script>
-    <!-- BEGIN Node2Universe Patch SVG Script BEGIN -->
-    <script>
-    let firstSelection = null;
-    const connections = new Map();
-    const nodeConnections = new Map();
-    const universeConnections = new Map();
+    <!--<script>   
+      var cursor = document.querySelector('.cursor');
+      var cursorinner = document.querySelector('.cursor2');
+      var a = document.querySelectorAll('a');
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const connectableItems = document.querySelectorAll('[data-type="cnx_node"], [data-type="cnx_universe"]');
-      const svg = document.getElementById('connection-svg');
-
-      connectableItems.forEach(item => {
-        item.addEventListener('click', () => {
-          if (firstSelection === null) {
-            firstSelection = item;
-            item.classList.add('selected');
-          } else {
-            if (firstSelection !== item && firstSelection.getAttribute('data-type') !== item.getAttribute('data-type')) {
-              const sourceType = firstSelection.getAttribute('data-type');
-              const targetType = item.getAttribute('data-type');
-              const sourceDiv = firstSelection;
-              const targetDiv = item;
-              const sourceParent = firstSelection.closest('li');
-              const targetParent = item.closest('li');
-              const sourceId = sourceType === 'cnx_node' 
-                ? sourceParent.getAttribute('data-node-id') 
-                : sourceParent.getAttribute('data-universe-id');
-              const targetId = targetType === 'cnx_universe' 
-                ? targetParent.getAttribute('data-universe-id') 
-                : targetParent.getAttribute('data-node-id');
-
-              const nodeId = sourceType === 'cnx_node' ? sourceId : targetId;
-              const universeId = sourceType === 'cnx_universe' ? sourceId : targetId;
-
-              if (universeConnections.has(universeId)) {
-                alert('This universe is already connected to a node.');
-                clearSelection();
-                return;
-              }
-
-              const nodeConnectionCount = nodeConnections.get(nodeId) || 0;
-              if (nodeConnectionCount >= 2) {
-                alert('This node has reached its maximum of 2 universe connections.');
-                clearSelection();
-                return;
-              }
-
-              const connectionKey = `${nodeId}-${universeId}`;
-              if (!connections.has(connectionKey)) {
-                connections.set(connectionKey, { source: sourceDiv, target: targetDiv, path: null });
-                nodeConnections.set(nodeId, nodeConnectionCount + 1);
-                universeConnections.set(universeId, nodeId);
-
-                // Update text for node
-                const nodeLi = sourceType === 'cnx_node' ? sourceParent : targetParent;
-                const nodeCountSpan = nodeLi.querySelector('[data-type="node-universe-count"]');
-                nodeCountSpan.textContent = `${nodeConnectionCount + 1} Universe${nodeConnectionCount + 1 === 1 ? '' : 's'}`;
-
-                // Update text for universe
-                const universeLi = sourceType === 'cnx_universe' ? sourceParent : targetParent;
-                const universeNodeSpan = universeLi.querySelector('[data-type="universe-node"]');
-                const nodeName = nodeLi.querySelector('.font-medium').textContent;
-                universeNodeSpan.textContent = nodeName;
-
-                // Swap empty for online on universe indicator
-                if (targetType === 'cnx_universe') {
-                  targetDiv.classList.remove('empty');
-                  targetDiv.classList.add('online');
-                } else if (sourceType === 'cnx_universe') {
-                  sourceDiv.classList.remove('empty');
-                  sourceDiv.classList.add('online');
-                }
-
-                drawConnection(sourceDiv, targetDiv, svg, connectionKey);
-              }
-            }
-            clearSelection();
-          }
-        });
+      document.addEventListener('mousemove', function(e){
+        var x = e.clientX;
+        var y = e.clientY;
+        cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
       });
 
-      function drawConnection(source, target, svg, connectionKey) {
-        const sourceRect = source.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        const svgRect = svg.getBoundingClientRect();
+      document.addEventListener('mousemove', function(e){
+        var x = e.clientX;
+        var y = e.clientY;
+        cursorinner.style.left = x + 'px';
+        cursorinner.style.top = y + 'px';
+      });
 
-        const sourceX = sourceRect.left + sourceRect.width / 2 - svgRect.left;
-        const sourceY = sourceRect.top + sourceRect.height / 2 - svgRect.top;
-        const targetX = targetRect.left + targetRect.width / 2 - svgRect.left;
-        const targetY = targetRect.top + targetRect.height / 2 - svgRect.top;
+      document.addEventListener('mousedown', function(){
+        cursor.classList.add('click');
+        cursorinner.classList.add('cursorinnerhover')
+      });
 
-        const midX = (sourceX + targetX) / 2;
-        const midY = (sourceY + targetY) / 2 + 40;
+      document.addEventListener('mouseup', function(){
+        cursor.classList.remove('click')
+        cursorinner.classList.remove('cursorinnerhover')
+      });
 
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', `M ${sourceX} ${sourceY} Q ${midX} ${midY} ${targetX} ${targetY}`);
-        path.classList.add('connection-line');
-        path.setAttribute('data-connection-key', connectionKey);
-        path.addEventListener('click', (e) => {
-          if (e.ctrlKey) {
-            const key = path.getAttribute('data-connection-key');
-            removeConnection(key, path);
-          }
+      a.forEach(item => {
+        item.addEventListener('mouseover', () => {
+          cursor.classList.add('hover');
         });
-        svg.appendChild(path);
-        connections.get(connectionKey).path = path;
-      }
-
-      function removeConnection(connectionKey, path) {
-        const connection = connections.get(connectionKey);
-        if (!connection) return;
-
-        const nodeId = connectionKey.split('-')[0];
-        const universeId = connectionKey.split('-')[1];
-
-        const nodeConnectionCount = nodeConnections.get(nodeId) || 0;
-        nodeConnections.set(nodeId, nodeConnectionCount - 1);
-        if (nodeConnections.get(nodeId) === 0) nodeConnections.delete(nodeId);
-        universeConnections.delete(universeId);
-
-        // Update node text
-        const nodeLi = document.querySelector(`[data-node-id="${nodeId}"]`);
-        const nodeCountSpan = nodeLi.querySelector('[data-type="node-universe-count"]');
-        const newCount = nodeConnectionCount - 1;
-        nodeCountSpan.textContent = `${newCount} Universe${newCount === 1 ? '' : 's'}`;
-
-        // Update universe text
-        const universeLi = document.querySelector(`[data-universe-id="${universeId}"]`);
-        const universeNodeSpan = universeLi.querySelector('[data-type="universe-node"]');
-        universeNodeSpan.textContent = 'No Node Patched';
-
-        // Swap online for empty on universe indicator
-        const universeDiv = universeLi.querySelector('[data-type="cnx_universe"]');
-        if (universeDiv) {
-          universeDiv.classList.remove('online');
-          universeDiv.classList.add('empty');
-        }
-
-        svg.removeChild(path);
-        connections.delete(connectionKey);
-      }
-
-      function clearSelection() {
-        firstSelection.classList.remove('selected');
-        connectableItems.forEach(i => i.classList.remove('selected'));
-        firstSelection = null;
-      }
-    });
-  </script>
-  <!-- END Node2Universe Patch SVG Script END -->
-   <script>
-    
-var cursor = document.querySelector('.cursor');
-var cursorinner = document.querySelector('.cursor2');
-var a = document.querySelectorAll('a');
-
-document.addEventListener('mousemove', function(e){
-  var x = e.clientX;
-  var y = e.clientY;
-  cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
-});
-
-document.addEventListener('mousemove', function(e){
-  var x = e.clientX;
-  var y = e.clientY;
-  cursorinner.style.left = x + 'px';
-  cursorinner.style.top = y + 'px';
-});
-
-document.addEventListener('mousedown', function(){
-  cursor.classList.add('click');
-  cursorinner.classList.add('cursorinnerhover')
-});
-
-document.addEventListener('mouseup', function(){
-  cursor.classList.remove('click')
-  cursorinner.classList.remove('cursorinnerhover')
-});
-
-a.forEach(item => {
-  item.addEventListener('mouseover', () => {
-    cursor.classList.add('hover');
-  });
-  item.addEventListener('mouseleave', () => {
-    cursor.classList.remove('hover');
-  });
-})
-   </script>
+        item.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hover');
+        });
+      })
+    </script>-->
+    <script src="{{ url_for('static', filename='js/patch.js') }}"></script>
 </body></html>

@@ -21,14 +21,15 @@ This project provides a modular Flask application structure designed for ArtNet 
 │   │   └── programming/    # Programming module
 │   │       ├── __init__.py
 │   │       └── routes.py
-│   ├── static/             # Static files (CSS, JavaScript, images)
-│   └── templates/          # HTML templates
-│       ├── patch/          # Templates for the patch module
-│       │   └── patch.html
-│       ├── playback/       # Templates for the playback module
-│       │   └── playback.html
-│       └── programming/    # Templates for the programming module
-│           └── programming.html
+│   ├── classes.py
+    ├── static/             # Static files (CSS, JavaScript, images)
+│   ├── templates/          # HTML templates
+│   │   ├── patch/          # Templates for the patch module
+│   │   │   └── patch.html
+│   │   ├── playback/       # Templates for the playback module
+│   │   │   └── playback.html
+│   │   └── programming/    # Templates for the programming module
+│   │       └── programming.html
 ├── run.py                  # Script to run the Flask development server
 └── README.md               # This file
 ```
