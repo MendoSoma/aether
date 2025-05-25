@@ -65,42 +65,55 @@ This application includes the following feature modules, each with a placeholder
     ```bash
     python run.py
     ```
+
     The application will start in debug mode, typically on `http://127.0.0.1:5000/`.
     - ArtNet API routes are available under `/artnet/api/...`.
     - Module pages are available (e.g., `http://127.0.0.1:5000/patch/`).
 
 ## Adding New Modules (Blueprints)
 
-To add a new module (e.g., a 'custom_feature' module):
+To add a new module (e.g., a 'lighting_effects' module):
 
 1.  **Create a new module directory:**
-    `app/modules/custom_feature/`
+    Inside `app/modules/`, create a new directory for your module (e.g., `app/modules/lighting_effects/`).
 2.  **Initialize the module package:**
-    Create an empty `app/modules/custom_feature/__init__.py`.
+    Create an empty `__init__.py` file within your new module directory (e.g., `app/modules/lighting_effects/__init__.py`).
 3.  **Define routes in `routes.py`:**
-    Create `app/modules/custom_feature/routes.py`. Define your blueprint and routes. If rendering HTML, specify the `template_folder`.
+    Create a `routes.py` file in your module directory (e.g., `app/modules/lighting_effects/routes.py`). Define your blueprint and routes here:
+
     ```python
-    # app/modules/custom_feature/routes.py
-    from flask import Blueprint, render_template
+    # app/modules/lighting_effects/routes.py
+    from flask import Blueprint, jsonify
 
-    custom_bp = Blueprint('custom_bp',
-                          __name__,
-                          url_prefix='/custom',  # Optional URL prefix for all routes in this blueprint
-                          template_folder='../../templates/custom_feature') # Points to app/templates/custom_feature/
+    lighting_bp = Blueprint('lighting_bp', __name__, url_prefix='/lighting')
 
-    @custom_bp.route('/')
-    def index():
-        return render_template('custom_page.html')
+    @lighting_bp.route('/strobe')
+    def strobe_effect():
+        return jsonify({"effect": "strobe activated"})
+
+    # Add other lighting effect routes here...
     ```
-4.  **Create Templates:**
-    Create your HTML files in the corresponding directory within `app/templates/` (e.g., `app/templates/custom_feature/custom_page.html`).
-5.  **Register the new blueprint:**
+4.  **Register the new blueprint:**
     In `app/__init__.py`, import and register your new blueprint within the `create_app` function:
+
     ```python
     # app/__init__.py
-    # ... (inside create_app function, after other blueprints)
-    from app.modules.custom_feature.routes import custom_bp
-    app.register_blueprint(custom_bp)
+    from flask import Flask
+
+    def create_app():
+        app = Flask(__name__)
+
+        # ... (other configurations)
+
+        # Import and register core blueprint
+        from app.modules.core.routes import core_bp
+        app.register_blueprint(core_bp, url_prefix='/artnet')
+
+        # Import and register your new blueprint
+        from app.modules.lighting_effects.routes import lighting_bp # Adjust import path
+        app.register_blueprint(lighting_bp) # url_prefix is already in blueprint definition
+
+        return app
     ```
 
-This structure allows for clean separation of concerns and makes it straightforward for other developers to contribute new functionalities.
+This structure allows for clean separation of concerns and makes it straightforward for other developers to contribute new functionalities by adding their own modules.

@@ -5,10 +5,6 @@ def create_app():
 
     # Configuration can be added here, e.g., app.config.from_object('config.Config')
 
-    # Import and register blueprints
-    from app.modules.core.routes import core_bp
-    app.register_blueprint(core_bp, url_prefix='/artnet') # Example prefix, can be changed
-
     # Import and register patch blueprint
     from app.modules.patch.routes import patch_bp
     app.register_blueprint(patch_bp) # The patch_bp has its own /patch/ prefix in its routes.
