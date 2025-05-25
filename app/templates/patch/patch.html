@@ -1,11 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Patch Module</title>
-</head>
-<body>
-    <h1>Welcome to the Patch Module</h1>
-    <p>This is a placeholder page for patching functionality.</p>
-</body>
-</html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Fixture Patch Panel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1F1F1F;color: #E0E0E0;}
+        .card {
+            background-color: #2D2D2D;border-radius: 0.5rem;padding: 1rem;
+        }
+        .input-field {
+            background-color: #3C3C3C;border: 1px solid #4A4A4A;border-radius: 0.375rem;padding: 0.5rem 0.75rem;
+            color: #E0E0E0;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #5E5E5E;
+        }
+        .btn {
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary {
+            background-color: #4CAF50;color: white;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+        .btn-secondary {
+            background-color: #4A4A4A;
+            color: #E0E0E0;
+        }
+        .btn-secondary:hover {
+            background-color: #5A5A5A;
+        }
+        .toggle-switch {
+            width: 3.5rem;
+            height: 1.75rem;
+            background-color: #4A4A4A;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-switch-slider {
+            position: absolute;
+            top: 0.25rem;
+            left: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out;
+        }
+        .toggle-switch.on .toggle-switch-slider {
+            transform: translateX(1.75rem);
+        }
+        .toggle-switch.on {
+            background-color: #4CAF50;}
+        .number-input {
+            width: 4rem;
+            text-align: center;
+        }
+        .number-input-controls button {
+            background-color: #3C3C3C;
+            border: 1px solid #4A4A4A;
+            color: #E0E0E0;
+            width: 1.5rem;
+            height: 1.25rem;display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .number-input-controls button:first-child {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .number-input-controls button:last-child {
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .grid-cell {
+            width: 1.5rem;
+            height: 1.5rem;
+            font-size: 0.625rem;
+            line-height: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3C3C3C;
+            border: 1px solid #4A4A4A;
+            border-radius: 0.125rem;
+            cursor: pointer;
+            flex-shrink: 0; /* Prevent cells from shrinking */
+        }
+        .grid-cell:hover {
+            background-color: #4A4A4A;
+        }
+        .grid-rows-16 {
+            grid-template-rows: repeat(16, minmax(0, 1fr));
+        }
+        .list-item-icon {
+            width: 3rem;height: 3rem;}
+        .list-item-container {
+            background-color: #333333;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+        }
+        .status-indicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            z-index: 1000; /* Render above SVG */
+        }
+        .status-indicator.online {
+            background-color: #4CAF50;}
+        .status-indicator.error {
+            background-color: #F44336;}
+        .status-indicator.empty {
+            background-color: #FFF;}
+        .connection-line {
+            stroke: #4CAF50;
+            stroke-width: 2;
+            fill: none;
+            pointer-events: all; /* Enable clicking on the line */
+            cursor: pointer;
+        }
+        .connection-line:hover {
+            stroke: #F44336; /* Red on hover to indicate removable */
+        }
+        .selected {
+            border: 2px solid #4CAF50;
+            border-radius: 0.375rem;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.col-span-2{grid-column:span 2 / span 2}.col-span-4{grid-column:span 4 / span 4}.col-span-8{grid-column:span 8 / span 8}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-1{margin-left:0.25rem}.flex{display:flex}.grid{display:grid}.w-full{width:100%}.grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:0.125rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.rounded-full{border-radius:9999px}.border-b{border-bottom-width:1px}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-6{padding:1.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}</style></head>
+<body class="p-6">
+<header class="mb-6">
+<img src="logo2.png" alt="Aether Logo" width="300" height="60">
+</header>
+<main class="grid grid-cols-12 gap-6">
+<section class="col-span-2 card">
+      <h2 class="text-lg font-medium mb-4">Node List</h2>
+      <ul class="space-y-3" id="nodes_ul">
+        <li class="list-item-container flex justify-between items-center" data-node-id="0">
+          <div>
+            <p class="font-medium">ICERAY NODE 1</p>
+            <p class="text-sm text-gray-400">
+              <span data-type="node-ip">192.168.1.201 | </span>
+              <span data-type="node-universe-count">0 Universes</span>
+            </p>
+          </div>
+          <div class="status-indicator online" data-type="cnx_node"></div>
+        </li>
+        <li class="list-item-container flex justify-between items-center" data-node-id="1">
+          <div>
+            <p class="font-medium">ICERAY NODE 2</p>
+            <p class="text-sm text-gray-400">
+              <span data-type="node-ip">192.168.1.202 | </span>
+              <span data-type="node-universe-count">0 Universes</span>
+            </p>
+          </div>
+          <div class="status-indicator online" data-type="cnx_node"></div>
+        </li>
+      </ul>
+    </section>
+    <section class="col-span-2 card">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-medium">Universes</h2>
+        <div class="flex items-center space-x-2">
+          <button class="p-1 rounded-full hover:bg-gray-700">
+            <span class="material-icons text-green-500">add_circle</span>
+          </button>
+          <button class="p-1 rounded-full hover:bg-gray-700">
+            <span class="material-icons text-red-500">remove_circle</span>
+          </button>
+        </div>
+      </div>
+      <ul class="space-y-3" id="universe_ul">
+        <li class="list-item-container flex justify-between items-center" data-universe-id="1">
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
+          <div>
+            <p class="font-medium">Universe 1</p>
+            <p class="text-sm text-gray-400">
+              <span data-type="universe-node">No Node Patched</span>
+              <span data-type="universe-fixtures"> | 0 Fixtures</span>
+            </p>
+          </div>
+        </li>
+        <li class="list-item-container flex justify-between items-center" data-universe-id="2">
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
+          <div>
+            <p class="font-medium">Universe 2</p>
+            <p class="text-sm text-gray-400">
+              <span data-type="universe-node">No Node Patched</span>
+              <span data-type="universe-fixtures"> | 0 Fixtures</span>
+            </p>
+          </div>
+        </li>
+        <li class="list-item-container flex justify-between items-center" data-universe-id="3">
+          <div class="status-indicator empty" data-type="cnx_universe"></div>
+          <div>
+            <p class="font-medium">Universe 3</p>
+            <p class="text-sm text-gray-400">
+              <span data-type="universe-node">No Node Patched</span>
+              <span data-type="universe-fixtures"> | 0 Fixtures</span>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <svg class="absolute top-0 left-0 w-full h-full pointer-events-none" id="connection-svg"></svg>
+<section class="col-span-4 card">
+<h2 class="text-lg font-medium mb-4">Fixture List</h2>
+<div class="grid grid-cols-3 gap-4">
+<div class="list-item-container flex flex-col items-center text-center">
+<img alt="Light fixture icon" class="list-item-icon mb-1" src="BeyeK10CC.png" width="160" height="200">
+<p class="font-medium text-sm">UKing 7x40 RGBW</p>
+<p class="text-xs text-gray-400">51 Channels</p>
+</div>
+</div>
+</section>
+<section class="col-span-4 card">
+<h2 class="text-lg font-medium mb-4">Patch Wizard</h2>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-sm" for="patch-qty">Patch Qty</label>
+<div class="flex items-center">
+<input class="input-field number-input" id="patch-qty" type="text" value="05">
+<div class="flex flex-col ml-1 number-input-controls">
+<button><span class="material-icons text-xs">arrow_drop_up</span></button>
+<button><span class="material-icons text-xs">arrow_drop_down</span></button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="text-sm" for="start-address">Start Address</label>
+<div class="flex items-center">
+<input class="input-field number-input" id="start-address" type="text" value="127">
+<div class="flex flex-col ml-1 number-input-controls">
+<button><span class="material-icons text-xs">arrow_drop_up</span></button>
+<button><span class="material-icons text-xs">arrow_drop_down</span></button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="text-sm" for="channel-wizard">Channel</label>
+<div class="flex items-center">
+<input class="input-field number-input" id="channel-wizard" type="text" value="200">
+<div class="flex flex-col ml-1 number-input-controls">
+<button><span class="material-icons text-xs">arrow_drop_up</span></button>
+<button><span class="material-icons text-xs">arrow_drop_down</span></button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="text-sm">Sequential</label>
+<div class="toggle-switch on">
+<div class="toggle-switch-slider"></div>
+</div>
+</div>
+<div class="list-item-container">
+<p class="font-medium text-sm">List Item Title</p>
+<p class="text-xs text-gray-400">List item label</p>
+</div>
+<button class="btn btn-primary w-full">PATCH</button>
+</div>
+</section>
+<section class="col-span-8 card overflow-x-auto">
+  <div class="grid grid-rows-16 gap-0.5 min-w-[52rem] w-full" style="grid-template-columns: repeat(32, minmax(0, 1fr));" id="patch-panel">
+  </div>
+</section>
+<section class="col-span-4 card">
+<table class="w-full text-sm">
+<thead>
+<tr class="border-b border-gray-600">
+<th class="text-left py-2 font-medium">Name</th>
+<th class="text-left py-2 font-medium">Group</th>
+<th class="text-left py-2 font-medium">Channel</th>
+<th class="text-left py-2 font-medium">Invert Pan</th>
+<th class="text-left py-2 font-medium">Invert Tilt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-gray-700">
+<td class="py-3">UKING 7x40w RGBW</td>
+<td class="py-3">Beams Frnt</td>
+<td class="py-3">200</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-gray-700">
+<td class="py-3">UKING 7x40w RGBW</td>
+<td class="py-3">Beams Frnt</td>
+<td class="py-3">201</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-gray-700">
+<td class="py-3">UKING 7x40w RGBW</td>
+<td class="py-3">Beams Frnt</td>
+<td class="py-3">201</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="py-3">UKING 7x40w RGBW</td>
+<td class="py-3">Beams Frnt</td>
+<td class="py-3">201</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+<td class="py-3">
+<div class="toggle-switch">
+<div class="toggle-switch-slider"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</main>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const gridContainer = document.querySelector('#patch-panel');
+    if (gridContainer) {
+      for (let i = 1; i <= 512; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('grid-cell');
+        cell.textContent = i;
+        gridContainer.appendChild(cell);
+      }
+    }
+  });
+</script>
+<script>
+        // Basic toggle switch functionality
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('on');
+            });
+        });
+        // Number input controls functionality
+        document.querySelectorAll('.number-input-controls button').forEach(button => {
+            button.addEventListener('click', () => {
+                const input = button.closest('.flex.items-center').querySelector('input[type="text"]');
+                if (!input) return;
+                let currentValue = parseInt(input.value, 10);
+                if (isNaN(currentValue)) currentValue = 0;
+                if (button.querySelector('.material-icons').textContent === 'arrow_drop_up') {
+                    currentValue++;
+                } else if (button.querySelector('.material-icons').textContent === 'arrow_drop_down') {
+                    currentValue = Math.max(0, currentValue - 1); // Prevent negative numbers if not desired
+                }
+                input.value = String(currentValue).padStart(2, '0'); // Ensure two digits with leading zero
+            });
+        });
+    </script>
+    <!-- BEGIN Node2Universe Patch SVG Script BEGIN -->
+    <script>
+    let firstSelection = null;
+    const connections = new Map();
+    const nodeConnections = new Map();
+    const universeConnections = new Map();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const connectableItems = document.querySelectorAll('[data-type="cnx_node"], [data-type="cnx_universe"]');
+      const svg = document.getElementById('connection-svg');
+
+      connectableItems.forEach(item => {
+        item.addEventListener('click', () => {
+          if (firstSelection === null) {
+            firstSelection = item;
+            item.classList.add('selected');
+          } else {
+            if (firstSelection !== item && firstSelection.getAttribute('data-type') !== item.getAttribute('data-type')) {
+              const sourceType = firstSelection.getAttribute('data-type');
+              const targetType = item.getAttribute('data-type');
+              const sourceDiv = firstSelection;
+              const targetDiv = item;
+              const sourceParent = firstSelection.closest('li');
+              const targetParent = item.closest('li');
+              const sourceId = sourceType === 'cnx_node' 
+                ? sourceParent.getAttribute('data-node-id') 
+                : sourceParent.getAttribute('data-universe-id');
+              const targetId = targetType === 'cnx_universe' 
+                ? targetParent.getAttribute('data-universe-id') 
+                : targetParent.getAttribute('data-node-id');
+
+              const nodeId = sourceType === 'cnx_node' ? sourceId : targetId;
+              const universeId = sourceType === 'cnx_universe' ? sourceId : targetId;
+
+              if (universeConnections.has(universeId)) {
+                alert('This universe is already connected to a node.');
+                clearSelection();
+                return;
+              }
+
+              const nodeConnectionCount = nodeConnections.get(nodeId) || 0;
+              if (nodeConnectionCount >= 2) {
+                alert('This node has reached its maximum of 2 universe connections.');
+                clearSelection();
+                return;
+              }
+
+              const connectionKey = `${nodeId}-${universeId}`;
+              if (!connections.has(connectionKey)) {
+                connections.set(connectionKey, { source: sourceDiv, target: targetDiv, path: null });
+                nodeConnections.set(nodeId, nodeConnectionCount + 1);
+                universeConnections.set(universeId, nodeId);
+
+                // Update text for node
+                const nodeLi = sourceType === 'cnx_node' ? sourceParent : targetParent;
+                const nodeCountSpan = nodeLi.querySelector('[data-type="node-universe-count"]');
+                nodeCountSpan.textContent = `${nodeConnectionCount + 1} Universe${nodeConnectionCount + 1 === 1 ? '' : 's'}`;
+
+                // Update text for universe
+                const universeLi = sourceType === 'cnx_universe' ? sourceParent : targetParent;
+                const universeNodeSpan = universeLi.querySelector('[data-type="universe-node"]');
+                const nodeName = nodeLi.querySelector('.font-medium').textContent;
+                universeNodeSpan.textContent = nodeName;
+
+                // Swap empty for online on universe indicator
+                if (targetType === 'cnx_universe') {
+                  targetDiv.classList.remove('empty');
+                  targetDiv.classList.add('online');
+                } else if (sourceType === 'cnx_universe') {
+                  sourceDiv.classList.remove('empty');
+                  sourceDiv.classList.add('online');
+                }
+
+                drawConnection(sourceDiv, targetDiv, svg, connectionKey);
+              }
+            }
+            clearSelection();
+          }
+        });
+      });
+
+      function drawConnection(source, target, svg, connectionKey) {
+        const sourceRect = source.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        const svgRect = svg.getBoundingClientRect();
+
+        const sourceX = sourceRect.left + sourceRect.width / 2 - svgRect.left;
+        const sourceY = sourceRect.top + sourceRect.height / 2 - svgRect.top;
+        const targetX = targetRect.left + targetRect.width / 2 - svgRect.left;
+        const targetY = targetRect.top + targetRect.height / 2 - svgRect.top;
+
+        const midX = (sourceX + targetX) / 2;
+        const midY = (sourceY + targetY) / 2 + 40;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M ${sourceX} ${sourceY} Q ${midX} ${midY} ${targetX} ${targetY}`);
+        path.classList.add('connection-line');
+        path.setAttribute('data-connection-key', connectionKey);
+        path.addEventListener('click', (e) => {
+          if (e.ctrlKey) {
+            const key = path.getAttribute('data-connection-key');
+            removeConnection(key, path);
+          }
+        });
+        svg.appendChild(path);
+        connections.get(connectionKey).path = path;
+      }
+
+      function removeConnection(connectionKey, path) {
+        const connection = connections.get(connectionKey);
+        if (!connection) return;
+
+        const nodeId = connectionKey.split('-')[0];
+        const universeId = connectionKey.split('-')[1];
+
+        const nodeConnectionCount = nodeConnections.get(nodeId) || 0;
+        nodeConnections.set(nodeId, nodeConnectionCount - 1);
+        if (nodeConnections.get(nodeId) === 0) nodeConnections.delete(nodeId);
+        universeConnections.delete(universeId);
+
+        // Update node text
+        const nodeLi = document.querySelector(`[data-node-id="${nodeId}"]`);
+        const nodeCountSpan = nodeLi.querySelector('[data-type="node-universe-count"]');
+        const newCount = nodeConnectionCount - 1;
+        nodeCountSpan.textContent = `${newCount} Universe${newCount === 1 ? '' : 's'}`;
+
+        // Update universe text
+        const universeLi = document.querySelector(`[data-universe-id="${universeId}"]`);
+        const universeNodeSpan = universeLi.querySelector('[data-type="universe-node"]');
+        universeNodeSpan.textContent = 'No Node Patched';
+
+        // Swap online for empty on universe indicator
+        const universeDiv = universeLi.querySelector('[data-type="cnx_universe"]');
+        if (universeDiv) {
+          universeDiv.classList.remove('online');
+          universeDiv.classList.add('empty');
+        }
+
+        svg.removeChild(path);
+        connections.delete(connectionKey);
+      }
+
+      function clearSelection() {
+        firstSelection.classList.remove('selected');
+        connectableItems.forEach(i => i.classList.remove('selected'));
+        firstSelection = null;
+      }
+    });
+  </script>
+  <!-- END Node2Universe Patch SVG Script END -->
+</body></html>
