@@ -2,6 +2,8 @@ let firstSelection = null;
 const connections = new Map();
 const nodeConnections = new Map();
 const universeConnections = new Map();
+let selectedUniverseId = null;
+let selectedFixtureFile = null;
 
 async function updateNodes(showLoading = false) {
   const nodesUl = document.getElementById('nodes_ul');
@@ -209,6 +211,121 @@ function clearSelection() {
 document.addEventListener('DOMContentLoaded', () => {
     updateNodes(true);
     loadFixtures(); // Call loadFixtures here
+
+    // Universe selection
+    const universeUl = document.getElementById('universe_ul');
+    if (universeUl) {
+        universeUl.addEventListener('click', (event) => {
+            const listItem = event.target.closest('li.list-item-container.selectable');
+            if (!listItem) return;
+
+            // Remove 'chosen' from previously selected item
+            const currentChosen = universeUl.querySelector('li.list-item-container.selectable.chosen');
+            if (currentChosen) {
+                currentChosen.classList.remove('chosen');
+            }
+
+            // Add 'chosen' to clicked item
+            listItem.classList.add('chosen');
+
+            // Update selectedUniverseId
+            selectedUniverseId = listItem.getAttribute('data-universe-id');
+            // console.log('Selected Universe ID:', selectedUniverseId); // For debugging
+        });
+    }
+
+    // Fixture selection
+    const fixturesPanel = document.getElementById('fixtures_panel');
+    if (fixturesPanel) {
+        fixturesPanel.addEventListener('click', (event) => {
+            const listItem = event.target.closest('div.list-item-container.selectable');
+            if (!listItem) return;
+
+            // Remove 'chosen' from previously selected item
+            const currentChosen = fixturesPanel.querySelector('div.list-item-container.selectable.chosen');
+            if (currentChosen) {
+                currentChosen.classList.remove('chosen');
+            }
+
+            // Add 'chosen' to clicked item
+            listItem.classList.add('chosen');
+
+            // Update selectedFixtureFile
+            selectedFixtureFile = listItem.getAttribute('data-fixture-file');
+            // console.log('Selected Fixture File:', selectedFixtureFile); // For debugging
+        });
+    }
+
+    // Patch button functionality
+    const patchButton = document.getElementById('patch-button');
+    const patchQtyInput = document.getElementById('patch-qty');
+    const startAddressInput = document.getElementById('start-address');
+
+    if (patchButton && patchQtyInput && startAddressInput) {
+        patchButton.addEventListener('click', async () => {
+            const quantityValue = patchQtyInput.value;
+            const startAddressValue = startAddressInput.value;
+
+            if (selectedUniverseId === null) {
+                alert("Please select a universe.");
+                return;
+            }
+            if (selectedFixtureFile === null) {
+                alert("Please select a fixture.");
+                return;
+            }
+
+            const quantity = parseInt(quantityValue);
+            const startAddress = parseInt(startAddressValue);
+
+            if (isNaN(quantity) || quantity < 1) {
+                alert("Please enter a valid quantity (must be a number and at least 1).");
+                return;
+            }
+            if (isNaN(startAddress) || startAddress < 1 || startAddress > 512) { // Assuming DMX addresses 1-512
+                alert("Please enter a valid start address (must be a number between 1 and 512).");
+                return;
+            }
+
+            const payload = {
+                fixture_id: selectedFixtureFile, // This is already the filename string
+                universe_id: parseInt(selectedUniverseId), // Ensure universe_id is an int
+                start_address: startAddress,
+                quantity: quantity
+            };
+
+            try {
+                const response = await fetch('/api/patch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json(); // Or response.text() if API doesn't return JSON
+
+                if (response.ok) {
+                    if (data.message) {
+                        alert('Patch successful: ' + data.message);
+                    } else {
+                        alert('Patch operation completed successfully.'); // Generic success
+                    }
+                    // Optionally, refresh UI elements or clear selections
+                    // e.g., loadUniverses() or clear selections if needed
+                } else {
+                    if (data.error) {
+                        alert('Patch failed: ' + data.error);
+                    } else {
+                        alert('Patch failed with status: ' + response.status); // More specific error
+                    }
+                }
+            } catch (error) {
+                console.error('Error during patch operation:', error);
+                alert('Error during patch operation. See console for details.');
+            }
+        });
+    }
 });
 document.getElementById('refresh-nodes')?.addEventListener('click', () => updateNodes(true));
 
@@ -241,9 +358,10 @@ async function loadFixtures() {
                 const fixtureName = fixture.fixture_name || 'Unnamed Fixture';
                 const channelCount = fixture.channel_count !== undefined ? fixture.channel_count : 'N/A';
                 const iconUrl = '/static/assets/icon_mh.png'; // Direct path for JS
+                const fixtureFile = fixture.filename || 'unknown_filename.json';
 
                 const fixtureHTML = `
-                    <div class="list-item-container selectable flex flex-col items-center text-center">
+                    <div class="list-item-container selectable flex flex-col items-center text-center" data-fixture-file="${fixtureFile}">
                         <img alt="Light fixture icon" class="list-item-icon mb-1" src="${iconUrl}" width="160" height="200">
                         <p class="font-medium text-sm">${fixtureName}</p>
                         <p class="text-xs text-gray-400">${channelCount} Channels</p>
@@ -259,6 +377,9 @@ async function loadFixtures() {
 }
 
 // --- Fixture Upload Logic ---
+// This DOMContentLoaded listener should be merged with the one above for better practice,
+// but for this task, I will keep it separate to strictly follow the instructions of modifying specific parts.
+// However, it's better to have a single DOMContentLoaded listener.
 
 document.addEventListener('DOMContentLoaded', () => {
     const fixtureAddButton = document.getElementById('fixture_add');

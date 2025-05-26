@@ -1,0 +1,104 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug: * Detected change in 'c:\\Users\\jakes\\Desktop\\AETHER\\Project\\aether\\app\\__init__.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:51] "GET /patch/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:51] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:51] "[36mGET /static/assets/icon_mh.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:51] "[36mGET /static/assets/logo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:52] "[36mGET /static/js/patch.js HTTP/1.1[0m" 304 -
+INFO:root:Using broadcast IP: 192.168.1.255
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:52] "GET /api/nodes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:52] "GET /api/fixtures HTTP/1.1" 200 -
+DEBUG:root:Patch payload: {'fixture_id': 'rgbw-fader.json', 'universe_id': 1, 'start_address': 1, 'quantity': 1}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:42:59] "[33mPOST /api/patch HTTP/1.1[0m" 404 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\jakes\\Desktop\\AETHER\\Project\\aether\\app\\modules\\patch\\routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /patch/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /static/assets/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /static/assets/icon_mh.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /static/js/patch.js HTTP/1.1" 200 -
+INFO:root:Using broadcast IP: 192.168.1.255
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /api/nodes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "GET /api/fixtures HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "GET /patch/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "[36mGET /static/assets/icon_mh.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "[36mGET /static/assets/logo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "[36mGET /static/js/patch.js HTTP/1.1[0m" 304 -
+INFO:root:Using broadcast IP: 192.168.1.255
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "GET /api/nodes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:43] "GET /api/fixtures HTTP/1.1" 200 -
+DEBUG:root:Patch payload: {'fixture_id': 'rgbw-fader.json', 'universe_id': 1, 'start_address': 1, 'quantity': 1}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'RGBW Fader', 'shortName': 'RGBW', 'categories': ['Color Changer'], 'meta': {'authors': ['Flo Edelmann'], 'createDate': '2017-12-07', 'lastModifyDate': '2018-07-21'}, 'availableChannels': {'Red': {'fineChannelAliases': ['Red fine', 'Red fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Red'}}, 'Green': {'fineChannelAliases': ['Green fine', 'Green fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Green'}}, 'Blue': {'fineChannelAliases': ['Blue fine', 'Blue fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Blue'}}, 'White': {'fineChannelAliases': ['White fine', 'White fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'White'}}}, 'modes': [{'name': '8 bit', 'shortName': '8bit', 'channels': ['Red', 'Green', 'Blue', 'White']}, {'name': '16 bit', 'shortName': '16bit', 'channels': ['Red', 'Red fine', 'Green', 'Green fine', 'Blue', 'Blue fine', 'White', 'White fine']}, {'name': '24 bit', 'shortName': '24bit', 'channels': ['Red', 'Red fine', 'Red fine^2', 'Green', 'Green fine', 'Green fine^2', 'Blue', 'Blue fine', 'Blue fine^2', 'White', 'White fine', 'White fine^2']}], 'fixtureKey': 'rgbw-fader', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/rgbw-fader'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:43:48] "POST /api/patch HTTP/1.1" 200 -
+DEBUG:root:Patch payload: {'fixture_id': 'strobe.json', 'universe_id': 2, 'start_address': 1, 'quantity': 4}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'Strobe', 'categories': ['Strobe'], 'meta': {'authors': ['Mikey Rowlands'], 'createDate': '2019-11-01', 'lastModifyDate': '2019-11-01'}, 'availableChannels': {'Frequency': {'capability': {'type': 'ShutterStrobe', 'shutterEffect': 'Strobe', 'speedStart': 'slow', 'speedEnd': 'fast'}}, 'Dimmer': {'defaultValue': 0, 'capability': {'type': 'Intensity'}}}, 'modes': [{'name': 'Frequency + Dimmer', 'channels': ['Frequency', 'Dimmer']}, {'name': 'Dimmer + Frequency', 'channels': ['Dimmer', 'Frequency']}], 'fixtureKey': 'strobe', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/strobe'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:44:51] "[31m[1mPOST /api/patch HTTP/1.1[0m" 400 -
+DEBUG:root:Patch payload: {'fixture_id': 'strobe.json', 'universe_id': 3, 'start_address': 1, 'quantity': 4}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'Strobe', 'categories': ['Strobe'], 'meta': {'authors': ['Mikey Rowlands'], 'createDate': '2019-11-01', 'lastModifyDate': '2019-11-01'}, 'availableChannels': {'Frequency': {'capability': {'type': 'ShutterStrobe', 'shutterEffect': 'Strobe', 'speedStart': 'slow', 'speedEnd': 'fast'}}, 'Dimmer': {'defaultValue': 0, 'capability': {'type': 'Intensity'}}}, 'modes': [{'name': 'Frequency + Dimmer', 'channels': ['Frequency', 'Dimmer']}, {'name': 'Dimmer + Frequency', 'channels': ['Dimmer', 'Frequency']}], 'fixtureKey': 'strobe', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/strobe'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:44:58] "[31m[1mPOST /api/patch HTTP/1.1[0m" 400 -
+DEBUG:root:Patch payload: {'fixture_id': 'strobe.json', 'universe_id': 1, 'start_address': 5, 'quantity': 4}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'Strobe', 'categories': ['Strobe'], 'meta': {'authors': ['Mikey Rowlands'], 'createDate': '2019-11-01', 'lastModifyDate': '2019-11-01'}, 'availableChannels': {'Frequency': {'capability': {'type': 'ShutterStrobe', 'shutterEffect': 'Strobe', 'speedStart': 'slow', 'speedEnd': 'fast'}}, 'Dimmer': {'defaultValue': 0, 'capability': {'type': 'Intensity'}}}, 'modes': [{'name': 'Frequency + Dimmer', 'channels': ['Frequency', 'Dimmer']}, {'name': 'Dimmer + Frequency', 'channels': ['Dimmer', 'Frequency']}], 'fixtureKey': 'strobe', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/strobe'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:45:06] "POST /api/patch HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\jakes\\Desktop\\AETHER\\Project\\aether\\app\\modules\\patch\\routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /patch/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /static/assets/icon_mh.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /static/assets/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /static/js/patch.js HTTP/1.1" 200 -
+INFO:root:Using broadcast IP: 192.168.1.255
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /api/nodes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:18] "GET /api/fixtures HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+DEBUG:root:Patch payload: {'fixture_id': 'strobe.json', 'universe_id': 1, 'start_address': 1, 'quantity': 4}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'Strobe', 'categories': ['Strobe'], 'meta': {'authors': ['Mikey Rowlands'], 'createDate': '2019-11-01', 'lastModifyDate': '2019-11-01'}, 'availableChannels': {'Frequency': {'capability': {'type': 'ShutterStrobe', 'shutterEffect': 'Strobe', 'speedStart': 'slow', 'speedEnd': 'fast'}}, 'Dimmer': {'defaultValue': 0, 'capability': {'type': 'Intensity'}}}, 'modes': [{'name': 'Frequency + Dimmer', 'channels': ['Frequency', 'Dimmer']}, {'name': 'Dimmer + Frequency', 'channels': ['Dimmer', 'Frequency']}], 'fixtureKey': 'strobe', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/strobe'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:46:26] "POST /api/patch HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\jakes\\Desktop\\AETHER\\Project\\aether\\app\\modules\\patch\\routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "GET /patch/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "[36mGET /static/assets/logo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "[36mGET /static/assets/icon_mh.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "[36mGET /static/js/patch.js HTTP/1.1[0m" 304 -
+INFO:root:Using broadcast IP: 192.168.1.255
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "GET /api/nodes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:40] "GET /api/fixtures HTTP/1.1" 200 -
+DEBUG:root:Patch payload: {'fixture_id': 'rgbw-fader.json', 'universe_id': 1, 'start_address': 1, 'quantity': 1}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'RGBW Fader', 'shortName': 'RGBW', 'categories': ['Color Changer'], 'meta': {'authors': ['Flo Edelmann'], 'createDate': '2017-12-07', 'lastModifyDate': '2018-07-21'}, 'availableChannels': {'Red': {'fineChannelAliases': ['Red fine', 'Red fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Red'}}, 'Green': {'fineChannelAliases': ['Green fine', 'Green fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Green'}}, 'Blue': {'fineChannelAliases': ['Blue fine', 'Blue fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Blue'}}, 'White': {'fineChannelAliases': ['White fine', 'White fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'White'}}}, 'modes': [{'name': '8 bit', 'shortName': '8bit', 'channels': ['Red', 'Green', 'Blue', 'White']}, {'name': '16 bit', 'shortName': '16bit', 'channels': ['Red', 'Red fine', 'Green', 'Green fine', 'Blue', 'Blue fine', 'White', 'White fine']}, {'name': '24 bit', 'shortName': '24bit', 'channels': ['Red', 'Red fine', 'Red fine^2', 'Green', 'Green fine', 'Green fine^2', 'Blue', 'Blue fine', 'Blue fine^2', 'White', 'White fine', 'White fine^2']}], 'fixtureKey': 'rgbw-fader', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/rgbw-fader'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:51:44] "POST /api/patch HTTP/1.1" 200 -
+DEBUG:root:Patch payload: {'fixture_id': 'rgbw-fader.json', 'universe_id': 1, 'start_address': 5, 'quantity': 4}
+DEBUG:root:Fixture data: {'$schema': 'https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/schema-12.5.0/schemas/fixture.json', 'name': 'RGBW Fader', 'shortName': 'RGBW', 'categories': ['Color Changer'], 'meta': {'authors': ['Flo Edelmann'], 'createDate': '2017-12-07', 'lastModifyDate': '2018-07-21'}, 'availableChannels': {'Red': {'fineChannelAliases': ['Red fine', 'Red fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Red'}}, 'Green': {'fineChannelAliases': ['Green fine', 'Green fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Green'}}, 'Blue': {'fineChannelAliases': ['Blue fine', 'Blue fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'Blue'}}, 'White': {'fineChannelAliases': ['White fine', 'White fine^2'], 'capability': {'type': 'ColorIntensity', 'color': 'White'}}}, 'modes': [{'name': '8 bit', 'shortName': '8bit', 'channels': ['Red', 'Green', 'Blue', 'White']}, {'name': '16 bit', 'shortName': '16bit', 'channels': ['Red', 'Red fine', 'Green', 'Green fine', 'Blue', 'Blue fine', 'White', 'White fine']}, {'name': '24 bit', 'shortName': '24bit', 'channels': ['Red', 'Red fine', 'Red fine^2', 'Green', 'Green fine', 'Green fine^2', 'Blue', 'Blue fine', 'Blue fine^2', 'White', 'White fine', 'White fine^2']}], 'fixtureKey': 'rgbw-fader', 'manufacturerKey': 'generic', 'oflURL': 'https://open-fixture-library.org/generic/rgbw-fader'}
+INFO:werkzeug:127.0.0.1 - - [26/May/2025 01:53:39] "POST /api/patch HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\jakes\\Desktop\\AETHER\\Project\\aether\\app\\modules\\patch\\routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 119-418-065
